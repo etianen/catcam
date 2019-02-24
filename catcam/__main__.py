@@ -25,18 +25,18 @@ def main():
             camera.hflip = True
             time.sleep(2)
             camera.capture(stream, format="jpeg")
-            picture = stream.getvalue()
-        logger.info("Picture taken! Snap!")
-        # Send the picture.
-        logger.info("Sending pic...")
-        try:
-            url = "{}node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
-            files = {'image': open(picture, 'rb')}
-            requests.post(url, files,)
-        except RequestException as ex:
-            logger.warning("Could not send pic: %s", ex)
-        else:
-            logger.info("Pic sent!")
+
+            logger.info("Picture taken! Snap!")
+            # Send the picture.
+            logger.info("Sending pic...")
+            try:
+                url = "{}node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
+                files = {'image': stream}
+                requests.post(url, files,)
+            except RequestException as ex:
+                logger.warning("Could not send pic: %s", ex)
+            else:
+                logger.info("Pic sent!")
         # All done!
         logger.info("Waiting for a bit...")
         time.sleep(10)
