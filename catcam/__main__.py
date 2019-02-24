@@ -1,15 +1,11 @@
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
 from gpiozero import MotionSensor
 from io import BytesIO
 import logging
 from picamera import PiCamera
-import smtplib
 import time
 from catcam import settings
-
+import requests
+from requests.exceptions import RequestException
 
 logger = logging.getLogger(__name__)
 
@@ -31,25 +27,16 @@ def main():
             camera.capture(stream, format="jpeg")
             picture = stream.getvalue()
         logger.info("Picture taken! Snap!")
-        # Email the picture.
-        logger.info("Sending email...")
-        msg = MIMEMultipart()
-        msg["From"] = settings.EMAIL_FROM
-        msg["To"] = COMMASPACE.join(settings.EMAIL_TO)
-        msg["Date"] = formatdate(localtime=True)
-        msg["Subject"] = "[CatCam] Cat detected"
-        msg.attach(MIMEText("A wild cat was spotted in the house!"))
-        part = MIMEApplication(picture, Name="cat.jpg")
-        part["Content-Disposition"] = 'attachment; filename="cat.jpg"'
-        msg.attach(part)
+        # Send the picture.
+        logger.info("Sending pic...")
         try:
-            with smtplib.SMTP(settings.EMAIL_HOST, port=settings.EMAIL_PORT) as smtp:
-                smtp.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-                smtp.sendmail(settings.EMAIL_FROM, settings.EMAIL_TO, msg.as_string())
-        except OSError as ex:
-            logger.warning("Could not send email: %s", ex)
+            url = "{}node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
+            files = {'image': open(picture, 'rb')}
+            requests.post(url, files,)
+        except RequestException as ex:
+            logger.warning("Could not send pic: %s", ex)
         else:
-            logger.info("Email sent!")
+            logger.info("Pic sent!")
         # All done!
         logger.info("Waiting for a bit...")
         time.sleep(10)
