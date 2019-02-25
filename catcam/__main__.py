@@ -1,16 +1,11 @@
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
 from gpiozero import MotionSensor
 from io import BytesIO
 import logging
 from picamera import PiCamera
-import smtplib
 import time
 from catcam import settings
 import requests
-from requests.exceptions import RequestException
+from requests import HTTPError
 
 
 logger = logging.getLogger(__name__)
@@ -31,15 +26,18 @@ def main():
             camera.hflip = True
             time.sleep(2)
             camera.capture(stream, format="jpeg")
-            picture = stream.getvalue()
-        logger.info("Picture taken! Snap!")
-        # Send the picture.
-        logger.info("Sending pic...")
-        try:
-            pass  # TODO
-        except RequestException as ex:
-            logger.warning("Could not send pic: %s", ex)
-        else:
+            logger.info("Picture taken! Snap!")
+            # Send the picture.
+            logger.info("Sending pic...")
+            try:
+                url = "{}/node_manager/{}".format(settings.HUB_URL, settings.NODE_ID)
+                response = requests.post(url, stream,)
+                response.raise_for_status()
+
+            except HTTPError as e:
+                status_code = e.response.status_code
+                logger.warning("Could not send pic: {}".format(status_code))
+
             logger.info("Pic sent!")
         # All done!
         logger.info("Waiting for a bit...")
