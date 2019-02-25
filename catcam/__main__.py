@@ -5,7 +5,7 @@ from picamera import PiCamera
 import time
 from catcam import settings
 import requests
-from requests import ResponseError
+from requests.exceptions import RequestException
 
 
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ def main():
                 response = requests.post(url, files,)
                 response.raise_for_status()
 
-            except ResponseError as e:
+            except RequestException as e:
                 logger.warning("Could not send pic: {}".format(e))
 
             logger.info("Pic sent!")
