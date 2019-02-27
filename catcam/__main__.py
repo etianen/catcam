@@ -32,7 +32,7 @@ def main():
             logger.info("Sending pic...")
             try:
                 url = "{}/node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
-                files = {'image': stream}
+                files = {'image': ("image.jpeg", stream, "image/jpeg")}
                 response = requests.post(url, files=files,)
                 response.raise_for_status()
 
