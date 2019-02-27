@@ -26,6 +26,7 @@ def main():
             camera.hflip = True
             time.sleep(2)
             camera.capture(stream, format="jpeg")
+            stream.seek(0)
             logger.info("Picture taken! Snap!")
             # Send the picture.
             logger.info("Sending pic...")
