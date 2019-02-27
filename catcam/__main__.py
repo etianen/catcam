@@ -33,7 +33,7 @@ def main():
             try:
                 url = "{}/node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
                 files = {'image': stream}
-                response = requests.post(url, files,)
+                response = requests.post(url, files=files,)
                 response.raise_for_status()
 
             except RequestException as e:
