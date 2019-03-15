@@ -24,7 +24,7 @@ def main():
         with PiCamera() as camera, BytesIO() as stream:
             camera.vflip = True
             camera.hflip = True
-            time.sleep(2)
+            time.sleep(1)
             camera.capture(stream, format="jpeg")
             stream.seek(0)
             logger.info("Picture taken! Snap!")
