@@ -42,7 +42,7 @@ def main():
             logger.info("Pic sent!")
         # All done!
         logger.info("Waiting for a bit...")
-        time.sleep(60*60)
+        time.sleep(60*30)
 
 
 if __name__ == "__main__":
