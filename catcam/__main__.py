@@ -39,7 +39,7 @@ def main():
             logger.info("Pic sent!")
         # All done!
         logger.info("Waiting for a bit...")
-        time.sleep(30)
+        time.sleep(60*30)
 
     pir.when_motion = motion_detected
 
