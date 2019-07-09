@@ -3,7 +3,7 @@ from io import BytesIO
 import logging
 from picamera import PiCamera
 import time
-from time import datetime
+import datetime
 from catcam import settings
 import requests
 from requests.exceptions import RequestException
