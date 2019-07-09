@@ -3,7 +3,8 @@ from io import BytesIO
 import logging
 from picamera import PiCamera
 import time
-import datetime
+from datetime import timedelta
+from datetime import datetime
 from catcam import settings
 import requests
 from requests.exceptions import RequestException
@@ -15,12 +16,12 @@ logger = logging.getLogger(__name__)
 def main():
     logging.basicConfig(format="[%(levelname)s %(name)s] %(message)s", level=logging.INFO)
     pir = MotionSensor(4)
-    time_stamp = datetime.datetime.now
-    delay = datetime.timedelta(minutes=5)
+    time_stamp = datetime.now()
+    delay = timedelta(minutes=5)
 
     def motion_detected():
-        global time_stamp
-        if datetime.datetime.now > (time_stamp + delay):
+        nonlocal time_stamp
+        if datetime.now() > (time_stamp + delay):
             logger.info("Motion detected! It's a cat!")
             # Take a picture.
             with PiCamera() as camera, BytesIO() as stream:
@@ -42,7 +43,7 @@ def main():
                     logger.warning("Could not send pic: {}".format(e))
 
                 logger.info("Pic sent!")
-            time_stamp = datetime.datetime.now
+            time_stamp = datetime.now()
             # All done!
 
     pir.when_motion = motion_detected
