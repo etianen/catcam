@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 def main():
     logging.basicConfig(format="[%(levelname)s %(name)s] %(message)s", level=logging.INFO)
     pir = MotionSensor(4)
-    time_stamp = datetime.now()
     delay = timedelta(minutes=5)
+    time_stamp = datetime.now() - delay
 
     def motion_detected():
         nonlocal time_stamp
