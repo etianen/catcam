@@ -41,18 +41,18 @@ def main():
 
                 except RequestException as e:
                     logger.warning("Could not send pic: {}".format(e))
-
                 logger.info("Pic sent!")
-                # Record a video and save to a file
+
+
+            # Record a video and save to a file
+            with picamera.PiCamera() as camera:
+                camera.resolution = (640, 480)
                 file_name = datetime.datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
-                camera.start_preview()
                 camera.start_recording('~/{}.h264'.format(file_name))
-                camera.wait_recording(30)
+                camera.wait_recording(60)
                 camera.stop_recording()
-                camera.stop_preview()
 
             time_stamp = datetime.now()
-
 
             # All done!
 
