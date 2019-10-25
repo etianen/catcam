@@ -48,7 +48,7 @@ def main():
             logger.info("Starting video...")
             with PiCamera() as camera:
                 camera.resolution = (640, 480)
-                file_name = datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
+                file_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
                 camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
                 camera.wait_recording(5)
                 camera.stop_recording()
