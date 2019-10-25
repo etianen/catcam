@@ -43,7 +43,16 @@ def main():
                     logger.warning("Could not send pic: {}".format(e))
 
                 logger.info("Pic sent!")
+                # Record a video and save to a file
+                file_name = datetime.datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
+                camera.resolution = (640, 480)
+                camera.start_recording('{}.h264'.format(file_name))
+                camera.wait_recording(30)
+                camera.stop_recording()
+
             time_stamp = datetime.now()
+
+
             # All done!
 
     pir.when_motion = motion_detected
