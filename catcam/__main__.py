@@ -15,14 +15,14 @@ logger = logging.getLogger(__name__)
 
 def main():
     logging.basicConfig(format="[%(levelname)s %(name)s] %(message)s", level=logging.INFO)
-    pir = MotionSensor(4)
-    delay = timedelta(minutes=30)
+    pir = MotionSensor(17)
+    delay = timedelta(minutes=15)
     time_stamp = datetime.now() - delay
 
     def motion_detected():
         nonlocal time_stamp
         if datetime.now() > (time_stamp + delay):
-            logger.info("Motion detected! It's a cat!")
+            logger.info("Motion detected!")
             # Take a picture.
             with PiCamera() as camera, BytesIO() as stream:
                 camera.vflip = True
