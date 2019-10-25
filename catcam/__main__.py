@@ -47,17 +47,11 @@ def main():
             # Record a video and save to a file
             logger.info("Starting video...")
             with PiCamera() as camera:
-                print(1)
                 camera.resolution = (640, 480)
-                print(2)
-                file_name = datetime.datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
-                print(3)
+                file_name = datetime.now.strftime("%Y-%m-%d-%H-%M-%S")
                 camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
-                print(4)
                 camera.wait_recording(5)
-                print(5)
                 camera.stop_recording()
-                print(6)
             logger.info("Saved video!")
 
             time_stamp = datetime.now()
