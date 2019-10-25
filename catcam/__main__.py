@@ -46,7 +46,7 @@ def main():
 
             # Record a video and save to a file
             logger.info("Starting video...")
-            with picamera.PiCamera() as camera:
+            with PiCamera() as camera:
                 print(1)
                 camera.resolution = (640, 480)
                 print(2)
