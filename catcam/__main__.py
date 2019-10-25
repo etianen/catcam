@@ -44,7 +44,7 @@ def main():
                 try:
                     url = "{}/node_manager/{}/".format(settings.HUB_URL, settings.NODE_ID)
                     files = {'image': ("image.jpeg", stream, "image/jpeg")}
-                    response = requests.post(url, files=files,)
+                    response = requests.post(url, files=files, timeout=60)
                     response.raise_for_status()
 
                 except RequestException as e:
