@@ -36,7 +36,7 @@ def main():
                 camera.resolution = (640, 480)
                 file_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
                 camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
-                camera.wait_recording(30)
+                camera.wait_recording(120)
                 camera.stop_recording()
                 logger.info("Saved video!")
                 # Send the picture.
