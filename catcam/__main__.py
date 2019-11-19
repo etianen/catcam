@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def main():
     logging.basicConfig(format="[%(levelname)s %(name)s] %(message)s", level=logging.INFO)
     pir = MotionSensor(17)
-    delay = timedelta(minutes=15)
+    delay = timedelta(seconds=10)
     time_stamp = datetime.now() - delay
 
     def motion_detected():
@@ -27,6 +27,7 @@ def main():
             with PiCamera() as camera, BytesIO() as stream:
                 camera.vflip = True
                 camera.hflip = True
+                camera.rotation = 270
                 time.sleep(1)
                 camera.capture(stream, format="jpeg")
                 stream.seek(0)
@@ -36,7 +37,7 @@ def main():
                 camera.resolution = (640, 480)
                 file_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
                 camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
-                camera.wait_recording(120)
+                camera.wait_recording(180)
                 camera.stop_recording()
                 logger.info("Saved video!")
                 # Send the picture.
