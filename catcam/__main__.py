@@ -33,13 +33,13 @@ def main():
                 stream.seek(0)
                 logger.info("Picture taken! Snap!")
                 # Record a video and save to a file
-                logger.info("Starting video...")
-                camera.resolution = (640, 480)
-                file_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-                camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
-                camera.wait_recording(180)
-                camera.stop_recording()
-                logger.info("Saved video!")
+                # logger.info("Starting video...")
+                # camera.resolution = (640, 480)
+                # file_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+                # camera.start_recording('/home/pi/videos/{}.h264'.format(file_name))
+                # camera.wait_recording(180)
+                # camera.stop_recording()
+                # logger.info("Saved video!")
                 # Send the picture.
                 logger.info("Sending pic...")
                 try:
