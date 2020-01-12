@@ -20,7 +20,7 @@ def main():
         nonlocal time_stamp
         if datetime.now() > (time_stamp + delay):
             logger.info("Motion detected!")
-            filename = datetime.now().strftimee("%m_%d_%Y__%H_%M_%S")
+            filename = datetime.now().strftime("%m_%d_%Y__%H_%M_%S")
             camera = PiCamera()
             camera.resolution = (1024, 768)
             camera.start_preview()
