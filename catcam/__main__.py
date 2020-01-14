@@ -30,7 +30,7 @@ def main():
             # time_stamp = datetime.now()
             camera.resolution = (640, 480)
             camera.start_recording('/home/pi/photos/{}.h264'.format(filename))
-            camera.wait_recording(50)
+            camera.wait_recording(30)
             camera.stop_recording()
 
     pir.when_motion = motion_detected
